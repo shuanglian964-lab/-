@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;700&family=Zhi+Mang+Xing&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-shoujin: "Ma Shan Zheng", cursive;
+  --font-serif: "Noto Serif SC", serif;
+  --font-handwriting: "Zhi Mang Xing", cursive;
+  
+  --color-paper: #f9f6f1;
+  --color-ink: #2c2c2c;
+  --color-sun: #eab308; /* Yellow-500 */
+}
+
+@layer base {
+  body {
+    @apply bg-paper text-ink selection:bg-sun/30 selection:text-ink;
+    font-family: var(--font-serif);
+    cursor: none;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-shoujin);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(44, 44, 44, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(44, 44, 44, 0.2);
+}
+
+/* Paper Texture */
+.paper-texture {
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+}
+
+/* Sunlight Glow */
+.sunlight-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 245, 200, 0.2) 0%,
+    rgba(255, 220, 150, 0.1) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.markdown-body p {
+  @apply mb-4 leading-relaxed;
+}
