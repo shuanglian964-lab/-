@@ -9,6 +9,7 @@ import { motion, useScroll, useSpring } from 'motion/react';
 export default function App() {
   const [writers, setWriters] = useState<Writer[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [searchedCity, setSearchedCity] = useState('');
   
   const { scrollYProgress } = useScroll();
@@ -20,10 +21,20 @@ export default function App() {
 
   const handleSearch = async (city: string) => {
     setLoading(true);
+    setError(null);
     setSearchedCity(city);
-    const results = await searchWritersByLocation(city);
-    setWriters(results);
-    setLoading(false);
+    try {
+      const results = await searchWritersByLocation(city);
+      if (results.length === 0) {
+        setError("暂未寻到文人的足迹，换座城试试？");
+      }
+      setWriters(results);
+    } catch (err) {
+      console.error(err);
+      setError("在寻迹过程中遇到了点麻烦，请稍后再试。");
+    } finally {
+      setLoading(false);
+    }
     
     // Smooth scroll to list after a small delay
     setTimeout(() => {
@@ -69,13 +80,38 @@ export default function App() {
                <h3 className="text-xl font-serif italic text-ink/30 mb-2">关于 {searchedCity} 的文学记忆</h3>
                <div className="w-12 h-[1px] bg-sun mx-auto" />
             </div>
+            
             <WriterList writers={writers} />
+
+            {/* Refresh Button Section */}
+            <div className="max-w-6xl mx-auto pb-40 flex flex-col items-center">
+              <div className="w-24 h-[1px] bg-ink/5 mb-12" />
+              <motion.button
+                onClick={() => handleSearch(searchedCity)}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative px-16 py-6 border border-ink/10 bg-white/40 backdrop-blur-sm shadow-sm hover:shadow-xl hover:border-sun/30 transition-all duration-700 overflow-hidden"
+              >
+                <div className="absolute inset-0 paper-texture opacity-10 pointer-events-none" />
+                <div className="relative z-10 flex flex-col items-center">
+                  <span className="text-3xl font-shoujin text-ink/80 group-hover:text-sun transition-colors duration-500">
+                    换一批 · 影迹
+                  </span>
+                  <span className="mt-2 text-[8px] font-serif uppercase tracking-[0.6em] text-ink/20 group-hover:text-ink/40 transition-colors">
+                    Search Again
+                  </span>
+                </div>
+              </motion.button>
+              <p className="mt-8 font-serif italic text-[10px] text-ink/20 tracking-widest">
+                “ 笔墨未干，行至此间，暂别亦是重逢。”
+              </p>
+            </div>
           </motion.div>
         )}
 
-        {!loading && searchedCity && writers.length === 0 && (
+        {!loading && error && (
           <div className="py-20 text-center font-serif italic text-ink/40">
-            暂未寻到文人的足迹，换座城试试？
+            {error}
           </div>
         )}
       </section>

@@ -63,14 +63,16 @@ export default function Hero() {
            initial={{ opacity: 0, y: 30 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+           className="flex flex-col items-center"
         >
           <span className="text-sun font-serif italic text-lg mb-4 block tracking-widest">— 寻觅文人的脚步 —</span>
-          <h1 className="text-7xl md:text-9xl mb-6 font-shoujin text-ink drop-shadow-xl">
+          <h1 className="text-7xl md:text-9xl mb-12 font-shoujin text-ink drop-shadow-xl">
              见字如面
           </h1>
-          <p className="max-w-xl text-lg font-serif italic leading-relaxed text-ink/70">
-            “每一座城市，都是一叠未寄出的信笺。我们循着墨迹，走进作家曾凝视过的晨曦与黄昏。”
-          </p>
+          <div className="max-w-2xl text-lg md:text-xl font-serif italic leading-loose text-ink/70 text-center space-y-2">
+            <p>“每一座城市，都是一叠未寄出的信笺。”</p>
+            <p>“我们循着墨迹，走进作家曾凝视过的晨曦与黄昏。”</p>
+          </div>
         </motion.div>
 
         {/* Scroll Indicator */}

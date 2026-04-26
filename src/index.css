@@ -21,6 +21,19 @@
   h1, h2, h3 {
     font-family: var(--font-shoujin);
   }
+
+  .lead-type {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.1);
+  }
+}
+
+/* Vertical Text Utility */
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
 
 /* Custom Scrollbar */
